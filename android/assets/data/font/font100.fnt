@@ -1,0 +1,16 @@
+info face="iCiel Crocante" size=100 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0
+common lineHeight=138 base=115 scaleW=512 scaleH=512 pages=1 packed=0
+page id=0 file="font100.png"
+chars count=10
+char id=32   x=0     y=0     width=0     height=0     xoffset=0     yoffset=115    xadvance=31     page=0  chnl=0 
+char id=56   x=0     y=0     width=64     height=79     xoffset=0     yoffset=43    xadvance=64     page=0  chnl=0 
+char id=53   x=64     y=0     width=62     height=78     xoffset=0     yoffset=43    xadvance=61     page=0  chnl=0 
+char id=57   x=126     y=0     width=64     height=77     xoffset=0     yoffset=43    xadvance=64     page=0  chnl=0 
+char id=54   x=190     y=0     width=64     height=77     xoffset=0     yoffset=43    xadvance=63     page=0  chnl=0 
+char id=51   x=254     y=0     width=61     height=77     xoffset=0     yoffset=44    xadvance=60     page=0  chnl=0 
+char id=55   x=315     y=0     width=56     height=75     xoffset=1     yoffset=44    xadvance=57     page=0  chnl=0 
+char id=50   x=371     y=0     width=55     height=74     xoffset=0     yoffset=43    xadvance=54     page=0  chnl=0 
+char id=48   x=426     y=0     width=63     height=74     xoffset=0     yoffset=43    xadvance=62     page=0  chnl=0 
+char id=52   x=0     y=79     width=68     height=73     xoffset=0     yoffset=45    xadvance=67     page=0  chnl=0 
+char id=49   x=68     y=79     width=36     height=72     xoffset=0     yoffset=46    xadvance=37     page=0  chnl=0 
+kernings count=-1

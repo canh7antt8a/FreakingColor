@@ -481,15 +481,23 @@ public class AndroidLauncher extends AndroidApplication implements ControlsApp, 
         boolean consumePurchased = bp.consumePurchase(PRODUCT_ID);
         if(consumePurchased) {
             if(isMenu) {
-
-                MyPrefs.setDemo(false);
-                ScreensManager.inst().menuScreen.moveOut();
-                ScreensManager.inst().game.setScreen(ScreensManager.inst()
-                        .getPlayGameScreen());
-
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyPrefs.setDemo(false);
+                        ScreensManager.inst().menuScreen.moveOut();
+                        ScreensManager.inst().game.setScreen(ScreensManager.inst()
+                                .getPlayGameScreen());
+                    }
+                });
             } else {
-                ScreensManager.inst().playGameScreen.setMoveOut();
-                ScreensManager.inst().playGameScreen.startGameDemo();
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        ScreensManager.inst().playGameScreen.setMoveOut();
+                        ScreensManager.inst().playGameScreen.startGameDemo();
+                    }
+                });
             }
         } else {
            // this.showToast("can not buy product");

@@ -104,7 +104,7 @@ public class MenuGroup extends Group {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
 				int countStartGame = MyPrefs.getCountStartGame();
-				if(countStartGame > 2) {
+				if(countStartGame > 10) {
 					ScreensManager.inst().game.control.purcharseIAP(true);
 				} else {
 					MyPrefs.setDemo(false);

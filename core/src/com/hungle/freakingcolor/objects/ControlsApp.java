@@ -20,5 +20,6 @@ public interface ControlsApp {
 	public void pushScreen(String name);
 	
 	public void pushActions(String name,String score);
-	
+
+	public void purcharseIAP(boolean isMenu);
 }

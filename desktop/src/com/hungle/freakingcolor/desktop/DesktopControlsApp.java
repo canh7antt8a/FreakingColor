@@ -53,6 +53,11 @@ public class DesktopControlsApp implements ControlsApp{
 	}
 
 	@Override
+	public void purcharseIAP() {
+		System.out.println("purchase IAP");
+	}
+
+	@Override
 	public void moreApp() {
 		// TODO Auto-generated method stub
 		

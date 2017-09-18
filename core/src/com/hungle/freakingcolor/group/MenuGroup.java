@@ -34,7 +34,7 @@ public class MenuGroup extends Group {
 		imageBg.setHeight(BaseScreen.hs);
 		imageBg.setPosition(w/2-BaseScreen.ws/2,h/2-BaseScreen.hs/2);
 		this.addActor(imageBg);
-		imageBg.setColor(MyColor.parseColor("ff8400"));
+		imageBg.setColor(MyColor.parseColor("424242"));
 		
 		newgame = new Image(MyAtlas.playGameAtlas.findRegion("newgame"));
 		newgame.setPosition(w/2-BaseScreen.ws/2+20,h/2-BaseScreen.hs/2+20);
@@ -102,11 +102,16 @@ public class MenuGroup extends Group {
 		this.addActor(btnPlay);
 		ClickListener listenerPlay = new ClickListener(){
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				MyPrefs.setDemo(false);
-				ScreensManager.inst().game.setScreen(ScreensManager.inst()
-						.getPlayGameScreen());
-				moveOut();
+
+				int countStartGame = MyPrefs.getCountStartGame();
+				if(countStartGame > 2) {
+					ScreensManager.inst().game.control.purcharseIAP(true);
+				} else {
+					MyPrefs.setDemo(false);
+					ScreensManager.inst().game.setScreen(ScreensManager.inst()
+							.getPlayGameScreen());
+					moveOut();
+				}
 				super.touchUp(event, x, y, pointer, button);
 			};
 		};
@@ -114,6 +119,7 @@ public class MenuGroup extends Group {
 		
 		lehung = new Image(MyAtlas.playGameAtlas.findRegion("lehung"));
 		lehung.setPosition(w/2+BaseScreen.ws/2-lehung.getWidth()-20,h/2-BaseScreen.hs/2+20);
+		lehung.setVisible(false);
 		this.addActor(lehung);
 
 	}

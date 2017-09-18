@@ -20,6 +20,10 @@ public class MenuScreen extends BaseScreen{
 		super.keyBackPressed();
 		Gdx.app.exit();
 	}
+
+	public void moveOut() {
+		menuGroup.moveOut();
+	}
 	
 	
 	@Override

@@ -41,6 +41,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.hungle.freakingcolor.objects.BlockGame;
 import com.hungle.freakingcolor.objects.ControlsApp;
+import com.hungle.freakingcolor.screens.ScreensManager;
+import com.hungle.freakingcolor.utils.MyPrefs;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,24 +61,43 @@ public class AndroidLauncher extends AndroidApplication implements ControlsApp, 
     private final int SHOW_TOAST = 7;
     private final int SHOW_RATE_APP = 8;
     private final int SHOW_MORE_APP = 9;
+    private static final String PRODUCT_ID = "android.test.purchased";
+    private static final String LICENSE_KEY = null; // PUT YOUR MERCHANT KEY HERE;
+    // put your Google merchant id here (as stated in public profile of your Payments Merchant Center)
+    // if filled library will provide protection against Freedom alike Play Market simulators
+    private static final String MERCHANT_ID=null;
 
     ProgressDialog prgd;
 //    private CallbackManager callbackManager;
     RelativeLayout layout;
     private View decorView;
     CallbackManager callbackManager;
+    private boolean isMenu = true;
 
     String packageCircleJumping = "com.hungle.circlejump.android";
-    String packageName = "com.hungle.freakingcolor.tap";
+    String packageName = "com.difference.color.puzzle";
     String urlGPlay = "https://play.google.com/store/apps/details?id=" + packageName;
     String urlGPlayCircleJumping = "https://play.google.com/store/apps/details?id=" + packageCircleJumping;
     String urlRate = "market://details?id=" + packageName;
     BillingProcessor bp;
+    private boolean readyToPurchase = false;
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bp  = BillingProcessor.newBillingProcessor(this, "", this);
+
+
+        if(!BillingProcessor.isIabServiceAvailable(this)) {
+            showToast("In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
+        }
+
+        bp  = BillingProcessor.newBillingProcessor(this, LICENSE_KEY, this);
+        bp.initialize();
+
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -154,6 +175,9 @@ public class AndroidLauncher extends AndroidApplication implements ControlsApp, 
     @Override
     protected void onDestroy() {
 //		adView.destroy();
+        if(bp != null) {
+            bp.release();
+        }
         super.onDestroy();
     }
 
@@ -394,6 +418,20 @@ public class AndroidLauncher extends AndroidApplication implements ControlsApp, 
     }
 
     @Override
+    public void purcharseIAP(boolean isMenu) {
+        this.isMenu = isMenu;
+        if(!readyToPurchase) {
+            showToast("Billing not initialized!");
+            return;
+        }
+
+        if(bp != null) {
+            Log.d(TAG, "billing processor" + bp);
+            bp.purchase(this, PRODUCT_ID);
+        }
+    }
+
+    @Override
     public void moreApp() {
         // TODO Auto-generated method stub
         if (checkConnect(getApplicationContext())) {
@@ -439,21 +477,45 @@ public class AndroidLauncher extends AndroidApplication implements ControlsApp, 
 
     @Override
     public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
-        Log.d(TAG, "productId:" + productId + ", Transaction details:" + details.toString());
+        Log.d(TAG, "productId:" + productId + ", Transaction details:" + details.purchaseInfo.responseData);
+        boolean consumePurchased = bp.consumePurchase(PRODUCT_ID);
+        if(consumePurchased) {
+            if(isMenu) {
+
+                MyPrefs.setDemo(false);
+                ScreensManager.inst().menuScreen.moveOut();
+                ScreensManager.inst().game.setScreen(ScreensManager.inst()
+                        .getPlayGameScreen());
+
+            } else {
+                ScreensManager.inst().playGameScreen.setMoveOut();
+                ScreensManager.inst().playGameScreen.startGameDemo();
+            }
+        } else {
+           // this.showToast("can not buy product");
+
+        }
     }
 
     @Override
     public void onPurchaseHistoryRestored() {
-
+        Log.d(TAG, "onPurchasedHistoryRestored");
+        for(String sku: bp.listOwnedProducts()) {
+            Log.d(TAG, "Owned Managed Product:" + sku);
+        }
+        for(String sku: bp.listOwnedSubscriptions()) {
+            Log.d(TAG, "Owned Managed Subscriptions:" + sku);
+        }
     }
 
     @Override
     public void onBillingError(int errorCode, @Nullable Throwable error) {
-
+        Log.d(TAG, "On Billing error:" + errorCode);
     }
 
     @Override
     public void onBillingInitialized() {
-
+        Log.d(TAG, "Ready to purchased");
+        readyToPurchase = true;
     }
 }

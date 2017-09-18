@@ -11,12 +11,22 @@ public class MyPrefs {
 	private static final String TIME = "time";
 	private static final String DEMO = "demo";
 	private static final String NEWGAME = "newgame";
+	private static final String COUNT_START_GAME = "count_start_game";
 
 	public static Preferences prefs = Gdx.app.getPreferences(PREFS_NAME);
 
 	public static void setDemo(boolean demo) {
 		prefs.putBoolean(DEMO, demo);
 		prefs.flush();
+	}
+
+	public static void setCountStartGame(int countStartGame) {
+		prefs.putInteger(COUNT_START_GAME, countStartGame);
+		prefs.flush();
+	}
+
+	public static int getCountStartGame() {
+		return prefs.getInteger(COUNT_START_GAME, 0);
 	}
 	
 	public static void disableAnimNewGame(boolean newgame){

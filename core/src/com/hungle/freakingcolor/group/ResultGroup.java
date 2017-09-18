@@ -1,6 +1,7 @@
 package com.hungle.freakingcolor.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -22,7 +23,7 @@ import com.hungle.freakingcolor.screens.BaseScreen;
 import com.hungle.freakingcolor.screens.ScreensManager;
 import com.hungle.freakingcolor.utils.MyPrefs;
 
-public class ResultGroup extends Group {
+public class ResultGroup extends Group  {
 	public Image imageBg;
 	public Image popup,newBestScore;
 	public Image btnPlay, btnFacebook, btnTwitter;
@@ -95,10 +96,14 @@ public class ResultGroup extends Group {
 		btnPlay.setOrigin(btnPlay.getWidth()/2, btnPlay.getHeight()/2);
 		MyClickListener clickPlay = new MyClickListener(new Runnable() {
 			public void run() {
-				moveOut();
-				//ScreensManager.inst().playGameScreen.changeColor();
-				MyPrefs.setDemo(false);
-				ScreensManager.inst().playGameScreen.startGameDemo();
+				System.out.println("ABCD");
+				if(1 != 1) {
+					ScreensManager.inst().playGameScreen.startGameDemo();
+				} else {
+					ScreensManager.inst().game.control.purcharseIAP(false);
+					// ScreensManager.inst().game.control.purcharseIAP(false);
+				}
+
 			}
 		});
 		btnPlay.addListener(clickPlay);

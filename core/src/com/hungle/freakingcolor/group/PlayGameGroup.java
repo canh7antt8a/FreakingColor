@@ -133,7 +133,7 @@ public class PlayGameGroup extends Group {
 		imageBg = new PPImage(MyAtlas.playGameAtlas.findRegion("bg"));
 		imageBg.setSize(BaseScreen.ws,BaseScreen.hs);
 		imageBg.setPosition(w/2-BaseScreen.ws/2,h/2-BaseScreen.hs/2);
-		imageBg.setColor(MyColor.parseColor("ff8400"));
+		imageBg.setColor(MyColor.parseColor("424242"));
 		this.addActor(imageBg);
 
 		btnSound = new PPImage(MyAtlas.playGameAtlas.findRegion("sound_on"));

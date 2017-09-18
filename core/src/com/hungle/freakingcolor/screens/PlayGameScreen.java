@@ -93,10 +93,10 @@ public class PlayGameScreen extends BaseScreen {
 	}
 
 	public void startGameDemo() {
-		isStart = true;
-		score = 0;
-		playGameGroup.initDemo(0);
-		currGroupShow = GROUP_PLAY;
+        isStart = true;
+        score = 0;
+        playGameGroup.initDemo(0);
+        currGroupShow = GROUP_PLAY;
 	}
 
 	public void setNext() {
@@ -118,6 +118,12 @@ public class PlayGameScreen extends BaseScreen {
 		}
 		resultGroup.moveIn(score);
 		currGroupShow = GROUP_RESULT;
+	}
+
+	public void setMoveOut() {
+		MyPrefs.setDemo(false);
+		if(resultGroup != null)
+			resultGroup.moveOut();
 	}
 
 	public void changeColor() {
